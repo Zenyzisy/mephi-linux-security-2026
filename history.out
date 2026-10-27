@@ -1,0 +1,75 @@
+    1  cat /etc/os-releas
+    2  cat /etc/os-release
+    3  whoami
+    4  getent group students
+    5  sudo groupadd students
+    6  getent passwd 1234
+    7  id user1
+    8  sudo useradd -m -u 1234 -g students -s /bin/bash user1
+    9  id user1
+   10  sudo passwd user1
+   11  sudo chage -M 90 user1
+   12  sudo chage -l user1
+   13  sudo find / -type f -perm -4000 -print 2>/dev/null
+   14  ps -eo pid,ruid,euid,comm | awk 'NR==1 || ($2 != 0 && $3 == 0)'
+   15  sudo -iu user1
+   16  passwd
+   17  echo "SUID test successful" | sudo tee /root/hw1-suid-check.txt
+   18  sudo chmod 600 /root/hw1-suid-check.txt
+   19  sudo -u user1 cat /root/hw1-suid-check.txt
+   20  su - user1
+   21  whoami
+   22  sudo -n id
+   23  sudo -n install -o root -g students -m 4750 /usr/bin/stat /home/user1/stat-suid
+   24  ls -l /home/user1/stat-suid
+   25  ls -l /home/user1/stat-suid 
+   26  sudo -n -u user1 /usr/bin/stat /root/hw1-suid-check.txt
+   27  sudo -n ls -l /home/user1/stat-suid
+   28  su - user1
+   29  sudo -n rm -- /home/user1/stat-suid /root/hw1-suid-check.txt
+   30  sudo -n ls -l /home/user1/stat-suid
+   31  chown 
+   32  whoami
+   33  command -v setcap
+   34  command -v getcap 
+   35  sudo -n install -o root -g students -m 0750 /usr/bin/chown /home/user1/chown-cap
+   36  sudo -n setcap cap_chown=ep /home/user1/chown-cap
+   37  sudo -n getcap /home/user1/chown-cap
+   38  su - user1
+   39  printf '%s\n' 'user1 ALL=(root) NOPASSWD: /usr/bin/date' > /tmp/user1-date
+   40  sudo -n visudo -cf /tmp/user1-date
+   41  sudo -n install -o root -g root -m 0440 /tmp/user1-date /etc/sudoers.d/user1-date
+   42  su - user1
+   43  sudo -n runuser -u user1 -- id
+   44  sudo -n cat /etc/sudoers.d/user1-date
+   45  sudo -n runuser -u user1 -- sudo -n /usr/bin/date
+   46  python3 -c 'b=int(next(x.split()[1] for x in open("/proc/self/status") if x.startswith("CapBnd:")),16); print("CAP_SYS_TIME:", "присутствует" if b & (1<<25) else "отсутствует")'
+   47  sudo -n python3 -c 'v=next(int(x.split()[1],16) for x in open("/proc/self/status") if x.startswith("CapEff:")); print("CAP_SYS_TIME (root):", "ДА" if v & (1<<25) else "НЕТ")' 
+   48  read -r -p "M265226" STUDENT_ID
+   49  printf 'НИЯУ МИФИ | Домашнее задание 1 | Номер: %s\n' "$STUDENT_ID"
+   50  STUDENT_ID='M265226'; printf 'НИЯУ МИФИ | Домашнее задание 1 | Номер: %s\n' "$STUDENT_ID" 
+   51  ls -lh mephi-screenshot.png
+   52  history > history.out
+   53  sudo -n stat /home/user1 > stat.out
+   54  cat stat.out
+   55  sudo -n ls -l /home/user1/stat-suid /home/user1/chown-cap
+   56  for f in /home/user1/stat-suid /home/user1/chown-cap; do   if sudo -n test -e "$f"; then     sudo -n stat "$f" >> stat.out;   fi; done
+   57  sudo -n getcap /home/user1/chown-cap > getcap.out
+   58  cat getcap.out
+   59  ls -lh
+   60  sudo -n find / -type f -perm -4000 -print 2>/dev/null > suid-files.out
+   61  cat suid-files.out
+   62  ps -eo pid,ruid,euid,comm | awk 'NR==1 || ($2 != 0 && $3 == 0)' > privileged-processes.out
+   63  cat privileged-processes.out
+   64  {   getent passwd user1;   getent group students;   sudo -n chage -l user1;   sudo -n stat -c '%A %U:%G %n' /etc/shadow /etc/sudoers; } > account-check.out 
+   65  ls -lh 
+   66  sudo -n sleep 20 &
+   67  ps -eo pid,ruid,euid,comm | awk 'NR==1 || ($2 != 0 && $3 == 0)' > privileged-processes.out
+   68  cat privileged-processes.out
+   69  sudo -n install -o root -g students -m 4750 /usr/bin/stat /home/user1/stat-suid
+   70  sudo -n stat /home/user1/stat-suid >> stat.out
+   71  sudo -n rm /home/user1/stat-suid
+   72  cat stat.out
+   73  sudo -n cat /etc/sudoers.d/user1-date > sudo-rule.out
+   74  cat sudo-rule.out 
+   75  history > history.out 

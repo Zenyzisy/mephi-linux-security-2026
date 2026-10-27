@@ -1,0 +1,11 @@
+]633;E;getent passwd user1;acc0eee4-451f-436f-9917-04d3c4d3d9d3]633;Cuser1:x:1234:1002::/home/user1:/bin/bash
+students:x:1002:
+Last password change					: Oct 27, 2026
+Password expires					: Jan 25, 2027
+Password inactive					: never
+Account expires						: never
+Minimum number of days between password change		: 0
+Maximum number of days between password change		: 90
+Number of days of warning before password expires	: 7
+-rw-r----- root:shadow /etc/shadow
+-r--r----- root:root /etc/sudoers
